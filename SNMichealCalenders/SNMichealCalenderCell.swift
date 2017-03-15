@@ -17,6 +17,8 @@ enum SNMichealCalendarCellStyle {
 class SNMichealCalendarCell: UICollectionViewCell {
     
     let selectColor = UIColor(netHex: 0x00a8c2)
+    let grayColor = UIColor(netHex: 0xbdbdbd)
+    let blackColor = UIColor(netHex: 0x565656)
     
     private var showStyle : SNMichealCalendarCellStyle = .none
     private lazy var content : UILabel = {
@@ -88,12 +90,21 @@ class SNMichealCalendarCell: UICollectionViewCell {
     }
     
     func noneStyle() {
-        content.layer.borderColor = UIColor.white.cgColor
+        content.layer.borderColor = UIColor.clear.cgColor
         content.layer.cornerRadius = SNMichealCalendar_adjustSizeAPP(27)
         content.layer.borderWidth = 2
         content.backgroundColor = .white
         content.clipsToBounds = true
-        content.textColor = .black
+        content.textColor = blackColor
+    }
+    
+    func grayStyle() {
+        content.layer.borderColor = UIColor.clear.cgColor
+        content.layer.cornerRadius = SNMichealCalendar_adjustSizeAPP(27)
+        content.layer.borderWidth = 2
+        content.backgroundColor = .white
+        content.clipsToBounds = true
+        content.textColor = grayColor
     }
     
     func cell(string: String) {
