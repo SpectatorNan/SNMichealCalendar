@@ -67,8 +67,8 @@ class SNMichealCalendarView: UIView {
         // header size
         flowLayout.headerReferenceSize = CGSize(width: headerW, height: headerH)
         
-        flowLayout.minimumLineSpacing = 0
-        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = SNMichealCalendar_adjustSizeAPP(38.6)
+        flowLayout.minimumInteritemSpacing = SNMichealCalendar_adjustSizeAPP(38.6)
         
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         
@@ -108,6 +108,19 @@ class SNMichealCalendarView: UIView {
         } else {
             lastDayLastMonth = firstDayNextMonth
         }
+        
+        numberOfDaysNextMonth = 7 - firstDayNextMonth!
+//        sumDays = (numberOfDaysCurrentMonth! + numberOfDaysNextMonth! + lastDayLastMonth!) as! Int
+        guard let s1 = numberOfDaysCurrentMonth else {
+            return
+        }
+        guard let s2 = numberOfDaysNextMonth else {
+            return
+        }
+        guard let s3 = lastDayLastMonth else {
+            return
+        }
+        sumDays = s1 + s2 + s3
         
         setupView()
         
@@ -169,6 +182,15 @@ class SNMichealCalendarView: UIView {
             layout.size.equalTo(CGSize(width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
         }
         
+        let row = CGFloat(sumDays!+6)/CGFloat(7)
+        let colH = row * SNMichealCalendar_adjustSizeAPP(54) + SNMichealCalendar_adjustSizeAPP(54)
+        collectionView.snp.makeConstraints { (layout) in
+            layout.top.equalTo(monthBtn.snp.bottom).offset(SNMichealCalendar_adjustSizeAPP(52))
+            layout.right.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-70))
+            layout.left.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(70))
+            layout.height.equalTo(colH)
+        }
+        
         contentView.snp.makeConstraints { (layout) in
             layout.edges.equalToSuperview()
         }
@@ -191,14 +213,47 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SNMichealCalendar_colCellID, for: indexPath) as! SNMichealCalendarCell
         
+        // show last month day 
+        if indexPath.row < lastDayLastMonth! {
+            cell.cell(string: String(format: "%ld", numberOfDaysLastMonth! - firstDayCurrentMonth! + 1 + indexPath.row))
+            cell.style = .none
+        } else if indexPath.row < numberOfDaysCurrentMonth!+lastDayLastMonth!{
+            // select month show
+            cell.cell(string: String(format: "%ld", indexPath.row + 1 - lastDayLastMonth!))
+            cell.style = .border
+        } else {
+            cell.cell(string: String(format: "%ld", indexPath.row + 1 - numberOfDaysCurrentMonth! - lastDayLastMonth!))
+            cell.style = .overall
+        }
         
         
         
+        return cell
+        
+        
+    }
+    
+     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        var header = SNMichealCalendarWeekReusableView()
+        
+        if kind == UICollectionElementKindSectionHeader {
+            
+             header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SNMichealCalendar_colHeader, for: indexPath) as! SNMichealCalendarWeekReusableView
+            
+            
+        }
+        
+        return header
     }
 }
 
 
 extension SNMichealCalendarView : UICollectionViewDelegate {
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("click itme \(indexPath.row)")
+    }
     
 }
 

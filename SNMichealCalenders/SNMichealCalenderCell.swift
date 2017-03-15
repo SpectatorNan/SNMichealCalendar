@@ -23,6 +23,7 @@ class SNMichealCalendarCell: UICollectionViewCell {
        var content = UILabel(frame: CGRect(x: 0, y: 0, width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
         
         content.font = UIFont.systemFont(ofSize: 15)
+        content.textAlignment = .center
         
         return content
     }()
