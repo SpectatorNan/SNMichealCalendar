@@ -14,30 +14,101 @@ enum SNMichealCalendarCover {
     case NotExist
 }
 
-class SNMichealCalendarView: UIView {
+let SNMichealCalendar_colCellID = "dayColCell"
+let SNMichealCalendar_colHeader = "dayColHeader"
 
+class SNMichealCalendarView: UIView {
+    
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
     
     var viewHeight : CGFloat? = nil;
     var viewWidth : CGFloat? = nil;
     
-    var numberOfDaysCurrentMonth: Int?
-    var numberOfDaysLastMonth: Int?
-    var firstDayCurrentMonth: Int?
-    var firstDayNextMonth: Int?
-    var lastDayLastMonth: Int?
-    var numberOfDaysNextMonth: Int?
+    var numberOfDaysCurrentMonth: Int? //本月总天数
+    var numberOfDaysLastMonth: Int?  //上月总天数 :
+    var firstDayCurrentMonth: Int? //本月第一天周几：
+    var firstDayNextMonth: Int?  //下月第一天周几：
+    var lastDayLastMonth: Int?  // = fisrtWeekDay //显示上个月格子数：
+    var numberOfDaysNextMonth: Int?  //= 7 - firstWeekDayNM;  //显示下个月格子数：
+    var sumDays: Int?  //= totalDayThisMonth + nextSum + lastSum  显示总各自数
     
     
-     override init(frame: CGRect) {
+    var calendar = Calendar.current
+//    let comps = Calendar.current.component([.year,.month,.day], from: Data())
+    let comps = Calendar.current.dateComponents([.year,.month,.day], from: Date())
+    
+    
+    
+    
+    
+    lazy var collectionView: UICollectionView = {
+        
+        
+        
+        var flowLayout = UICollectionViewFlowLayout()
+        
+        let cellW = SNMichealCalendar_adjustSizeAPP(54)
+        let cellH = SNMichealCalendar_adjustSizeAPP(54)
+        
+        
+        let headerW = SN_ScreenW - SNMichealCalendar_adjustSizeAPP(140)
+        let headerH = SNMichealCalendar_adjustSizeAPP(54)
+        
+        // cell size
+        flowLayout.itemSize = CGSize(width: cellW, height: cellH)
+        // scroll direction
+        flowLayout.scrollDirection = .vertical
+        // header size
+        flowLayout.headerReferenceSize = CGSize(width: headerW, height: headerH)
+        
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        
+        let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        
+        collection.backgroundColor = .clear
+                            
+        collection.register(SNMichealCalendarCell.classForCoder(), forCellWithReuseIdentifier: SNMichealCalendar_colCellID)
+        collection.register(SNMichealCalendarWeekReusableView.classForCoder(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: SNMichealCalendar_colHeader)
+        
+        collection.delegate = self
+        collection.dataSource = self
+        
+        
+        
+        return collection
+    }()
+    
+    
+    override init(frame: CGRect) {
         super.init(frame: frame)
-  
+        
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let currentMonth = comps.month
+        let currentYear = comps.year
+//        var currentDay = comps.day
+        
+        numberOfDaysCurrentMonth = getCurrentMonthDaysNum(date: Date())
+        numberOfDaysLastMonth = getDaysNum(month: currentMonth! - 1, year: currentYear!)
+        
+        firstDayCurrentMonth = getWeekDay(day: 1, month: currentMonth!, year: currentYear!)
+        firstDayNextMonth = getWeekDay(day: 1, month: currentMonth!+1, year: currentYear!)
+        
+        
+        if firstDayNextMonth == 7 {
+            lastDayLastMonth = 0
+        } else {
+            lastDayLastMonth = firstDayNextMonth
+        }
+        
         setupView()
         
     }
@@ -72,6 +143,8 @@ class SNMichealCalendarView: UIView {
         contentView.addSubview(lastBtn)
         lastBtn.setImage(UIImage(named:"leftArrow"), for: .normal)
         
+        contentView.addSubview(collectionView)
+        
         confirBtn.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(38))
             make.right.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-50))
@@ -84,7 +157,7 @@ class SNMichealCalendarView: UIView {
         }
         
         nextBtn.snp.makeConstraints { (layout) in
-        
+            
             layout.left.equalTo(monthBtn.snp.right).offset(SNMichealCalendar_adjustSizeAPP(40))
             layout.top.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(38))
             layout.size.equalTo(CGSize(width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
@@ -100,13 +173,77 @@ class SNMichealCalendarView: UIView {
             layout.edges.equalToSuperview()
         }
     }
+    
+}
 
+extension SNMichealCalendarView : UICollectionViewDataSource {
+    
+  
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return sumDays!
+    }
+    
+    
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SNMichealCalendar_colCellID, for: indexPath) as! SNMichealCalendarCell
+        
+        
+        
+        
+    }
+}
+
+
+extension SNMichealCalendarView : UICollectionViewDelegate {
+    
 }
 
 
 
-
-
+extension SNMichealCalendarView {
+    
+    fileprivate func getCurrentMonthDaysNum(date: Date) -> Int {
+        
+        let range = calendar.range(of: .day, in: .month, for: date)
+        
+        return (range?.count)!
+    }
+    
+    fileprivate func getDaysNum(month: Int, year: Int) -> Int {
+        var comps = DateComponents()
+        comps.month = month
+        comps.year = year
+        
+        let gregorian = Calendar(identifier: .gregorian)
+        let date = gregorian.date(from: comps)
+        let days = gregorian.range(of: .day, in: .month, for: date!)
+        
+        return (days?.count)!
+    }
+    
+    //返回1--周一，7--周日
+    fileprivate func getWeekDay(day: Int, month: Int, year: Int) -> Int {
+        var comps = DateComponents()
+        comps.month = month
+        comps.year = year
+        comps.day = day
+        
+        let date = calendar.date(from: comps)
+        let weekdayComps = calendar.dateComponents([.weekday], from: date!)
+        
+        var weekDayNum = weekdayComps.weekday! - 1
+        
+        if weekDayNum == 0 {
+            weekDayNum = 7
+        }
+        
+        return weekDayNum
+    }
+}
 
 
 
