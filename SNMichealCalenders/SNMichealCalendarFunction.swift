@@ -10,6 +10,6 @@ import Foundation
 import UIKit
 
 
-func NMichealCalendar_adjustSizeAPP(attribute: CGFloat) -> CGFloat {
+func SNMichealCalendar_adjustSizeAPP(_ attribute: CGFloat) -> CGFloat {
     return SN_adjustSizeWithUiDesign(attribute: attribute, UiDesignWidth: 750.0)
 }

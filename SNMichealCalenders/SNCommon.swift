@@ -12,7 +12,7 @@ import UIKit
 
 let SN_ScreenW = UIScreen.main.bounds.width
 
-let ScreenH = UIScreen.main.bounds.height
+let SN_ScreenH = UIScreen.main.bounds.height
 
 
 func SN_adjustSize(attribute: CGFloat) -> CGFloat {
@@ -63,6 +63,26 @@ func SN_colorWithHexString(hex:String) ->UIColor {
     return UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(1))
 }
 
+func textSizeFromTextString(text: String, textW: CGFloat, textH: CGFloat, fontSize: CGFloat, isBold: Bool) -> CGSize {
+    
+    if getCurrentIOS() > 7.0 {
+      
+        var dic = Dictionary<String, Any>()
+        
+        if isBold {
+            dic[NSFontAttributeName] = UIFont.boldSystemFont(ofSize: fontSize)
+        } else {
+            dic[NSFontAttributeName] = UIFont.systemFont(ofSize: fontSize)
+        }
+        
+        let rect = (text as NSString).boundingRect(with: CGSize(width: textW,height: textH), options: .usesLineFragmentOrigin, attributes: dic, context: nil)
+        
+        return rect.size
+    } else {
+        return CGSize.zero
+    }
+}
+
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
@@ -75,4 +95,184 @@ extension UIColor {
     convenience init(netHex:Int) {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
+}
+
+extension UIView {
+    
+    // x
+    var x : CGFloat {
+        
+        get {
+            
+            return frame.origin.x
+        }
+        
+        set(newVal) {
+            
+            var tmpFrame : CGRect = frame
+            tmpFrame.origin.x     = newVal
+            frame                 = tmpFrame
+        }
+    }
+    
+    // y
+    var y : CGFloat {
+        
+        get {
+            
+            return frame.origin.y
+        }
+        
+        set(newVal) {
+            
+            var tmpFrame : CGRect = frame
+            tmpFrame.origin.y     = newVal
+            frame                 = tmpFrame
+        }
+    }
+    
+    // height
+    var height : CGFloat {
+        
+        get {
+            
+            return frame.size.height
+        }
+        
+        set(newVal) {
+            
+            var tmpFrame : CGRect = frame
+            tmpFrame.size.height  = newVal
+            frame                 = tmpFrame
+        }
+    }
+    
+    // width
+    var width : CGFloat {
+        
+        get {
+            
+            return frame.size.width
+        }
+        
+        set(newVal) {
+            
+            var tmpFrame : CGRect = frame
+            tmpFrame.size.width   = newVal
+            frame                 = tmpFrame
+        }
+    }
+    
+    // left
+    var left : CGFloat {
+        
+        get {
+            
+            return x
+        }
+        
+        set(newVal) {
+            
+            x = newVal
+        }
+    }
+    
+    // right
+    var right : CGFloat {
+        
+        get {
+            
+            return x + width
+        }
+        
+        set(newVal) {
+            
+            x = newVal - width
+        }
+    }
+    
+    // top
+    var top : CGFloat {
+        
+        get {
+            
+            return y
+        }
+        
+        set(newVal) {
+            
+            y = newVal
+        }
+    }
+    
+    // bottom
+    var bottom : CGFloat {
+        
+        get {
+            
+            return y + height
+        }
+        
+        set(newVal) {
+            
+            y = newVal - height
+        }
+    }
+    
+    var centerX : CGFloat {
+        
+        get {
+            
+            return center.x
+        }
+        
+        set(newVal) {
+            
+            center = CGPoint(x: newVal, y: center.y)
+        }
+    }
+    
+    var centerY : CGFloat {
+        
+        get {
+            
+            return center.y
+        }
+        
+        set(newVal) {
+            
+            center = CGPoint(x: center.x, y: newVal)
+        }
+    }
+    
+    var middleX : CGFloat {
+        
+        get {
+            
+            return width / 2
+        }
+    }
+    
+    var middleY : CGFloat {
+        
+        get {
+            
+            return height / 2
+        }
+    }
+    
+    var middlePoint : CGPoint {
+        
+        get {
+            
+            return CGPoint(x: middleX, y: middleY)
+        }
+    }
+}
+
+//MARK: - 获取版本号
+func getCurrentIOS() -> CGFloat
+{
+    return CGFloat(Float(UIDevice.current.systemVersion)!)
+    
 }
