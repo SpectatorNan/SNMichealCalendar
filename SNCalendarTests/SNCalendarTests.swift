@@ -66,7 +66,29 @@ class SNCalendarTests: XCTestCase {
         print("=========================")
     }
     
+    func testTotalDayNums() {
+        let n = view?.getCurrentMonthDaysNum(date: Date())
+        print("=========================")
+        print("total days count - \(n)")
+        print("=========================")
+    }
+    
+    func testDaysNum() {
+        let n = view?.getDaysNum(month: 2, year: 2017)
+        print("=========================")
+        print("total days count - \(n)")
+        print("=========================")
+    }
 
+    func testGetWeekDay() {
+        
+        let n = view?.getWeekDay(day: 16, month: 3, year: 2017)
+        print("=========================")
+        print("total days count - \(n)")
+        print("=========================")
+    }
+    
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
@@ -74,5 +96,7 @@ class SNCalendarTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    
     
 }

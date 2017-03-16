@@ -59,7 +59,7 @@ class SNMichealCalendarView: UIView {
         
         
         let headerW = SN_ScreenW - SNMichealCalendar_adjustSizeAPP(140)
-        let headerH = SNMichealCalendar_adjustSizeAPP(54)
+        let headerH = SNMichealCalendar_adjustSizeAPP(54+38.6)
         
         // cell size
         flowLayout.itemSize = CGSize(width: cellW, height: cellH)
@@ -97,6 +97,7 @@ class SNMichealCalendarView: UIView {
 //        var currentDay = comps.day
         
         numberOfDaysCurrentMonth = calendarUntil.getCurrentMonthDaysNum(date: Date())
+        
         numberOfDaysLastMonth = calendarUntil.getDaysNum(month: currentMonth! - 1, year: currentYear!)
         
         firstDayCurrentMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth!, year: currentYear!)
@@ -106,7 +107,7 @@ class SNMichealCalendarView: UIView {
         if firstDayCurrentMonth == 7 {
             lastDayLastMonth = 0
         } else {
-            lastDayLastMonth = firstDayNextMonth
+            lastDayLastMonth = firstDayCurrentMonth
         }
         
         numberOfDaysNextMonth = 7 - firstDayNextMonth!
@@ -182,9 +183,9 @@ class SNMichealCalendarView: UIView {
             layout.size.equalTo(CGSize(width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
         }
         
-        let row = CGFloat(sumDays!+6)/CGFloat(7)
+        let row = (sumDays!+6)/(7)
 //        let row = getWeekNumsOfMonth(date: Date())
-        let colH = CGFloat(row)  * SNMichealCalendar_adjustSizeAPP(54+38.6) + SNMichealCalendar_adjustSizeAPP(40)
+        let colH = CGFloat(row)  * SNMichealCalendar_adjustSizeAPP(54+38.6) + SNMichealCalendar_adjustSizeAPP(40) + SNMichealCalendar_adjustSizeAPP(54+38.6)
         collectionView.snp.makeConstraints { (layout) in
             layout.top.equalTo(monthBtn.snp.bottom).offset(SNMichealCalendar_adjustSizeAPP(52))
             layout.right.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-70))
@@ -289,7 +290,7 @@ extension CalendarUntil {
         
         return (range?.count)!
     }
-    
+    // 某年某月多少天
      func getDaysNum(month: Int, year: Int) -> Int {
         var comps = DateComponents()
         comps.month = month
