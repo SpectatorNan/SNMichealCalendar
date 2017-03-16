@@ -38,8 +38,9 @@ class SNMichealCalendarView: UIView {
     var numberOfDaysNextMonth: Int?  //= 7 - firstWeekDayNM;  //显示下个月格子数：
     var sumDays: Int?  //= totalDayThisMonth + nextSum + lastSum  显示总各自数
     
+    var calendarUntil = CalendarUntil()
     
-    var calendar = Calendar.current
+    
 //    let comps = Calendar.current.component([.year,.month,.day], from: Data())
     let comps = Calendar.current.dateComponents([.year,.month,.day], from: Date())
     
@@ -90,20 +91,19 @@ class SNMichealCalendarView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+
         let currentMonth = comps.month
         let currentYear = comps.year
 //        var currentDay = comps.day
         
-        numberOfDaysCurrentMonth = getCurrentMonthDaysNum(date: Date())
-        numberOfDaysLastMonth = getDaysNum(month: currentMonth! - 1, year: currentYear!)
+        numberOfDaysCurrentMonth = calendarUntil.getCurrentMonthDaysNum(date: Date())
+        numberOfDaysLastMonth = calendarUntil.getDaysNum(month: currentMonth! - 1, year: currentYear!)
         
-        firstDayCurrentMonth = getWeekDay(day: 1, month: currentMonth!, year: currentYear!)
-        firstDayNextMonth = getWeekDay(day: 1, month: currentMonth!+1, year: currentYear!)
+        firstDayCurrentMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth!, year: currentYear!)
+        firstDayNextMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth!+1, year: currentYear!)
         
         
-        if firstDayNextMonth == 7 {
+        if firstDayCurrentMonth == 7 {
             lastDayLastMonth = 0
         } else {
             lastDayLastMonth = firstDayNextMonth
@@ -183,7 +183,8 @@ class SNMichealCalendarView: UIView {
         }
         
         let row = CGFloat(sumDays!+6)/CGFloat(7)
-        let colH = row * SNMichealCalendar_adjustSizeAPP(54) + SNMichealCalendar_adjustSizeAPP(54)
+//        let row = getWeekNumsOfMonth(date: Date())
+        let colH = CGFloat(row)  * SNMichealCalendar_adjustSizeAPP(54+38.6) + SNMichealCalendar_adjustSizeAPP(40)
         collectionView.snp.makeConstraints { (layout) in
             layout.top.equalTo(monthBtn.snp.bottom).offset(SNMichealCalendar_adjustSizeAPP(52))
             layout.right.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-70))
@@ -259,16 +260,37 @@ extension SNMichealCalendarView : UICollectionViewDelegate {
 
 
 
-extension SNMichealCalendarView {
+class CalendarUntil {
     
-    fileprivate func getCurrentMonthDaysNum(date: Date) -> Int {
+    
+    lazy var calendar : Calendar = {
+        var c = Calendar.current
+        c.timeZone = TimeZone.current
+        c.locale = Locale.current
+       return c
+    }()
+    
+    
+    lazy var dateFormatter : DateFormatter = {
+        var dfm = DateFormatter()
+        dfm.timeZone = self.calendar.timeZone
+        dfm.locale = self.calendar.locale
+        return dfm
+    }()
+    
+    }
+
+// get message
+extension CalendarUntil {
+    // 当月总共天数
+     func getCurrentMonthDaysNum(date: Date) -> Int {
         
         let range = calendar.range(of: .day, in: .month, for: date)
         
         return (range?.count)!
     }
     
-    fileprivate func getDaysNum(month: Int, year: Int) -> Int {
+     func getDaysNum(month: Int, year: Int) -> Int {
         var comps = DateComponents()
         comps.month = month
         comps.year = year
@@ -281,7 +303,7 @@ extension SNMichealCalendarView {
     }
     
     //返回1--周一，7--周日
-    fileprivate func getWeekDay(day: Int, month: Int, year: Int) -> Int {
+     func getWeekDay(day: Int, month: Int, year: Int) -> Int {
         var comps = DateComponents()
         comps.month = month
         comps.year = year
@@ -298,9 +320,143 @@ extension SNMichealCalendarView {
         
         return weekDayNum
     }
+    
+    //  貌似都是一个结果
+     func getNumberOfWeeks(date: Date) -> Int {
+        
+        let firstD = getFirstDayOfMonth(date: date)
+        let lastD = getLastDayOfMonth(date: date)
+        
+        let csf = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: firstD)
+        let csl = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: lastD)
+        
+        let result = (csl.year! - csf.year! + 52 + 1) % 52
+        
+        return  result
+    }
+    
+//    本月的第一天
+     func getFirstDayOfMonth(date: Date) -> Date {
+        
+        let compCurrDate = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: date)
+        
+        var compNewDate = DateComponents()
+        compNewDate.year = compCurrDate.year
+        compNewDate.month = compCurrDate.month
+        compNewDate.weekOfMonth = 1
+        compNewDate.day = 1
+        
+        return calendar.date(from: compNewDate)!
+    }
+    
+//     本月的最后一天
+     func getLastDayOfMonth(date: Date) -> Date {
+        
+        let compCurrDate = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: date)
+        
+        var compNewDate = DateComponents()
+        compNewDate.year = compCurrDate.year
+        compNewDate.month = compCurrDate.month! + 1
+        compNewDate.day = 0
+        
+        return calendar.date(from: compNewDate)!
+    }
+    
+    // 本月一共多少周
+    func getWeekNumsOfMonth(date: Date) -> Int {
+        
+      let d = getLastDayOfMonth(date: date)
+        let cs = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: d)
+        return cs.weekOfMonth!
+    }
+
+    
+    //本期第一个周日是哪天(含上月)(国外周日为每周第一天)
+    func getFirstWeekDayOfMonth(date: Date) -> Date {
+        
+        let d = getFirstDayOfMonth(date: date)
+        let wd = getFirstWeekDayOfWeek(date: d)
+        
+        return wd
+        
+    }
+    
+    //本周第一个周日是哪天
+    func getFirstWeekDayOfWeek(date: Date) -> Date {
+        
+        let cs = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: date)
+        
+        var ncs = DateComponents()
+        ncs.year = cs.year
+        ncs.month = cs.month
+        ncs.weekOfMonth = cs.weekOfMonth
+        ncs.weekday = calendar.firstWeekday
+        
+        let weekD = calendar.date(from: ncs)
+        
+        return weekD!
+    }
 }
 
-
+// make compare
+extension CalendarUntil {
+    // 是否同一个月
+    func compareIsSameMonth(dateA: Date, dateB: Date) -> Bool {
+        
+        let csA = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateA)
+        let csB = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateB)
+        
+        let compare = csA.year == csB.year && csA.month == csB.month
+        
+        return compare
+    }
+    
+//    是否同一周
+    func compareIsSameWeek(dateA: Date, dateB: Date) -> Bool {
+        
+        let csA = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateA)
+        let csB = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth,.weekOfYear], from: dateB)
+        
+        let compare = csA.year == csB.year && csA.weekOfYear == csB.weekOfYear
+        
+        return compare
+    }
+    
+//    是否同一天
+    func compareIsSameDay(dateA: Date, dateB: Date) -> Bool {
+        
+        let csA = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateA)
+        let csB = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth,.weekOfYear], from: dateB)
+        
+        let compare = csA.year == csB.year && csA.month == csB.month && csA.day == csB.year
+        
+        return compare
+    }
+    
+//    是否在某天之后(含当天)
+    func compare(dateA: Date, isAfter dateB: Date) -> Bool {
+        
+        let compare = dateA.compare(dateB) == .orderedDescending || compareIsSameDay(dateA: dateA, dateB: dateB)
+        
+        return compare
+    }
+    
+//    是否在某天之前(含当天)
+    func compare(dateA: Date, isBefore dateB: Date) -> Bool {
+        
+        let compare = dateA.compare(dateB) == .orderedAscending || compareIsSameDay(dateA: dateA, dateB: dateB)
+        
+        return compare
+    }
+    
+//    是否在某段时间之间
+    func compare(date:Date,between startDate: Date, and endDate: Date) -> Bool {
+        
+        let compare1 = compare(dateA: date, isAfter: startDate) && compare(dateA: date, isBefore: endDate)
+        
+        return compare1
+    }
+}
 
 
 

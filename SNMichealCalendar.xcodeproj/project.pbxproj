@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		747293ED1E7A594400DF1BFD /* SNCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747293EC1E7A594400DF1BFD /* SNCalendarTests.swift */; };
 		760AB7401E794BC400C29F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB73F1E794BC400C29F43 /* AppDelegate.swift */; };
 		760AB7421E794BC400C29F43 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB7411E794BC400C29F43 /* ViewController.swift */; };
 		760AB7451E794BC400C29F43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760AB7431E794BC400C29F43 /* Main.storyboard */; };
@@ -56,6 +57,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		747293EF1E7A594400DF1BFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 760AB7341E794BC400C29F43 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 760AB73B1E794BC400C29F43;
+			remoteInfo = SNMichealCalendar;
+		};
 		760AB7511E794BC400C29F43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 760AB7341E794BC400C29F43 /* Project object */;
@@ -73,6 +81,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		747293EA1E7A594400DF1BFD /* SNCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		747293EC1E7A594400DF1BFD /* SNCalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNCalendarTests.swift; sourceTree = "<group>"; };
+		747293EE1E7A594400DF1BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		760AB73C1E794BC400C29F43 /* SNMichealCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNMichealCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		760AB73F1E794BC400C29F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		760AB7411E794BC400C29F43 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +140,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		747293E71E7A594400DF1BFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		760AB7391E794BC400C29F43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -153,6 +171,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		747293EB1E7A594400DF1BFD /* SNCalendarTests */ = {
+			isa = PBXGroup;
+			children = (
+				747293EC1E7A594400DF1BFD /* SNCalendarTests.swift */,
+				747293EE1E7A594400DF1BFD /* Info.plist */,
+			);
+			path = SNCalendarTests;
+			sourceTree = "<group>";
+		};
 		760AB7331E794BC400C29F43 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +187,7 @@
 				760AB73E1E794BC400C29F43 /* SNMichealCalendar */,
 				760AB7531E794BC400C29F43 /* SNMichealCalendarTests */,
 				760AB75E1E794BC400C29F43 /* SNMichealCalendarUITests */,
+				747293EB1E7A594400DF1BFD /* SNCalendarTests */,
 				760AB73D1E794BC400C29F43 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -170,6 +198,7 @@
 				760AB73C1E794BC400C29F43 /* SNMichealCalendar.app */,
 				760AB7501E794BC400C29F43 /* SNMichealCalendarTests.xctest */,
 				760AB75B1E794BC400C29F43 /* SNMichealCalendarUITests.xctest */,
+				747293EA1E7A594400DF1BFD /* SNCalendarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,6 +300,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		747293E91E7A594400DF1BFD /* SNCalendarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 747293F11E7A594400DF1BFD /* Build configuration list for PBXNativeTarget "SNCalendarTests" */;
+			buildPhases = (
+				747293E61E7A594400DF1BFD /* Sources */,
+				747293E71E7A594400DF1BFD /* Frameworks */,
+				747293E81E7A594400DF1BFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				747293F01E7A594400DF1BFD /* PBXTargetDependency */,
+			);
+			name = SNCalendarTests;
+			productName = SNCalendarTests;
+			productReference = 747293EA1E7A594400DF1BFD /* SNCalendarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		760AB73B1E794BC400C29F43 /* SNMichealCalendar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 760AB7641E794BC400C29F43 /* Build configuration list for PBXNativeTarget "SNMichealCalendar" */;
@@ -334,6 +381,11 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "spectator Mr.Z";
 				TargetAttributes = {
+					747293E91E7A594400DF1BFD = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 760AB73B1E794BC400C29F43;
+					};
 					760AB73B1E794BC400C29F43 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -366,11 +418,19 @@
 				760AB73B1E794BC400C29F43 /* SNMichealCalendar */,
 				760AB74F1E794BC400C29F43 /* SNMichealCalendarTests */,
 				760AB75A1E794BC400C29F43 /* SNMichealCalendarUITests */,
+				747293E91E7A594400DF1BFD /* SNCalendarTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		747293E81E7A594400DF1BFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		760AB73A1E794BC400C29F43 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -401,6 +461,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		747293E61E7A594400DF1BFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				747293ED1E7A594400DF1BFD /* SNCalendarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		760AB7381E794BC400C29F43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -465,6 +533,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		747293F01E7A594400DF1BFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 760AB73B1E794BC400C29F43 /* SNMichealCalendar */;
+			targetProxy = 747293EF1E7A594400DF1BFD /* PBXContainerItemProxy */;
+		};
 		760AB7521E794BC400C29F43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 760AB73B1E794BC400C29F43 /* SNMichealCalendar */;
@@ -497,6 +570,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		747293F21E7A594400DF1BFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SNCalendarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNCalendarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNMichealCalendar.app/SNMichealCalendar";
+			};
+			name = Debug;
+		};
+		747293F31E7A594400DF1BFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SNCalendarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sepctatornan.SNCalendarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SNMichealCalendar.app/SNMichealCalendar";
+			};
+			name = Release;
+		};
 		760AB7621E794BC400C29F43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -671,6 +770,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		747293F11E7A594400DF1BFD /* Build configuration list for PBXNativeTarget "SNCalendarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				747293F21E7A594400DF1BFD /* Debug */,
+				747293F31E7A594400DF1BFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		760AB7371E794BC400C29F43 /* Build configuration list for PBXProject "SNMichealCalendar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -687,6 +794,7 @@
 				760AB7661E794BC400C29F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		760AB7671E794BC400C29F43 /* Build configuration list for PBXNativeTarget "SNMichealCalendarTests" */ = {
 			isa = XCConfigurationList;
@@ -695,6 +803,7 @@
 				760AB7691E794BC400C29F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		760AB76A1E794BC400C29F43 /* Build configuration list for PBXNativeTarget "SNMichealCalendarUITests" */ = {
 			isa = XCConfigurationList;
@@ -703,6 +812,7 @@
 				760AB76C1E794BC400C29F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

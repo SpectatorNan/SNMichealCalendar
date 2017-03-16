@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SNMichealCalendar
+
 
 class SNMichealCalendarTests: XCTestCase {
     
@@ -24,6 +24,25 @@ class SNMichealCalendarTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testOther() {
+        
+        func sum() -> (Int) -> Int {
+            
+            func add(value: Int) -> Int {
+                
+                return value + 1
+            }
+            
+            return add
+        }
+        
+        let r = sum()
+        
+        print("=========================")
+        print("result ----  \(r(8))")
+        print("=========================")
     }
     
     func testPerformanceExample() {
