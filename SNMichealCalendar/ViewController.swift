@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 //        view2.backgroundColor = SN_colorWithHexString(hex: "#00a8c2")
         self.navigationController?.navigationBar.isTranslucent = false;
         
-        let calendar = SNMichealCalendarView(frame: CGRect(x: 0, y: 0, width: SN_ScreenW, height: SN_ScreenH))
+        let calendar = SNMichealCalendar(frame: CGRect(x: 0, y: 0, width: SN_ScreenW, height: SN_ScreenH))
         view.addSubview(calendar)
         
     }
