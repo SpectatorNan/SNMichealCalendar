@@ -35,15 +35,41 @@ class CalendarUntil {
 }
 
 enum CalendarMethod {
+
+    case assignDateToDate //指定年月日，获取某天(Date)
     
-    enum convert {
-        case date
+    enum Day {
+        case weekDayAtDay //指定年月日，获取周几(1--周一，7--周日)
+        case firstWeekday //给定日期，获取本月第一天
+        case lastWeekday //给定日期，获取本月最后一天
+        case assignWeekdayByDate //给定日期和指定周几，获取周几是某天
     }
+    
+    enum Month {
+        case fetchDates // 指定年月，获取该月日期(Date数组)
+        case daysByDate // 指定日期，获取当月天数
+        case daysAtMonth // 指定年月，获取当月天数
+        case weeksCount // 指定日期，获取当月周数
+        case firstWeekdayOfMonth //指定日期，获取当期第一个周日是某天(第一行第一天，很有可能是上个月最后一个周日)
+    }
+    
+    enum compare {
+        case samemonth  //比较是不是同一月
+        case sameweek //比较是不是同一周
+        case sameday //比较是不是同一天
+        case after // 是不是在某天(后面的Date)之后
+        case before //是不是在某天(后面的Date)之前
+        case between //是不是在A天(date)在B天(startDate)和C天(endDate)之间
+    }
+    
 }
 
 extension CalendarUntil {
     
-    
+//    func untilMethod(function: CalendarMethod) -> (Any, Any, Any) -> Date {
+//        
+//
+//    }
     
 }
 
@@ -88,21 +114,7 @@ extension CalendarUntil {
         
         return weekDayNum
     }
-    
-    //  貌似都是一个结果
-    func getNumberOfWeeks(date: Date) -> Int {
-        
-        let firstD = getFirstDayOfMonth(date: date)
-        let lastD = getLastDayOfMonth(date: date)
-        
-        let csf =  firstD==>
-        let csl =  lastD==>
-        
-        let result = (csl.year! - csf.year! + 52 + 1) % 52
-        
-        return  result
-    }
-    
+
     //    本月的第一天
     func getFirstDayOfMonth(date: Date) -> Date {
         
@@ -130,7 +142,7 @@ extension CalendarUntil {
         return calendar.date(from: compNewDate)!
     }
     
-    // 本月一共多少周
+    // 本月一共多少周(2017.4这个月份有问题)
     func getWeekNumsOfMonth(date: Date) -> Int {
         
         let d = getLastDayOfMonth(date: date)
@@ -138,19 +150,33 @@ extension CalendarUntil {
         return cs.weekOfMonth!
     }
     
+    //  计算本月几周(结果貌似有问题)(2017.4这个月份有问题)
+    func getNumberOfWeeks(date: Date) -> Int {
+        
+        let firstD = getFirstDayOfMonth(date: date)
+        let lastD = getLastDayOfMonth(date: date)
+        
+        let csf =  firstD==>
+        let csl =  lastD==>
+        
+        let result = (csl.weekOfYear! - csf.weekOfYear! + 52 + 1) % 52
+        
+        return  result
+    }
+    
     
     //本期第一个周日是哪天(含上月)(国外周日为每周第一天)
     func getFirstWeekDayOfMonth(date: Date) -> Date {
         
         let d = getFirstDayOfMonth(date: date)
-        let wd = getFirstWeekDayOfWeek(date: d)
+        let wd = getWeekDayOfWeek(date: d,weekDay: 1)
         
         return wd
         
     }
     
-    //本周第一个周日是哪天
-    func getFirstWeekDayOfWeek(date: Date) -> Date {
+    //根据某天获取当周的周几 // 1.周日 2.周一 3.周二  4.周三 5.周四 6.周五 7.周六
+    func getWeekDayOfWeek(date: Date, weekDay: Int) -> Date {
         
         let cs =  date==>
         
@@ -158,7 +184,7 @@ extension CalendarUntil {
         ncs.year = cs.year
         ncs.month = cs.month
         ncs.weekOfMonth = cs.weekOfMonth
-        ncs.weekday = calendar.firstWeekday
+        ncs.weekday = weekDay
         
         let weekD = calendar.date(from: ncs)
         

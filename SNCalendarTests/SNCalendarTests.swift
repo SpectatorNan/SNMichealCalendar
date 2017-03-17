@@ -59,7 +59,7 @@ class SNCalendarTests: XCTestCase {
         print("the year - \(cs.year) , the month - \(cs.month) , the day - \(cs.day) , the weekday - \(cs.weekday) , the weekofmonth - \(cs.weekOfMonth)")
         print("=========================")
         
-        let d2 = view?.getFirstWeekDayOfWeek(date: Date())
+        let d2 = view?.getFirstWeekDayOfWeek(date: Date(),weekDay: 1)
         let cs2 =  d2!==>
         print("=========================")
         print("the year - \(cs2.year) , the month - \(cs2.month) , the day - \(cs2.day) , the weekday - \(cs2.weekday) , the weekofmonth - \(cs2.weekOfMonth)")
@@ -102,21 +102,7 @@ class SNCalendarTests: XCTestCase {
         }
     }
     
-    func testGuard() {
-        guard true else {
-            print("=========================")
-            print("true")
-            print("=========================")
-            return
-        }
-        
-        guard false else {
-            print("=========================")
-            print("false")
-            print("=========================")
-            return
-        }
-    }
+
     
     func testOper() {
         let cs2 = Date()==>
