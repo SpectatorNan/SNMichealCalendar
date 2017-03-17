@@ -15,7 +15,7 @@ class SNCalendarTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        view = CalendarUntil()
+        view = CalendarUntil.current
     }
     
     override func tearDown() {
@@ -59,7 +59,7 @@ class SNCalendarTests: XCTestCase {
         print("the year - \(cs.year) , the month - \(cs.month) , the day - \(cs.day) , the weekday - \(cs.weekday) , the weekofmonth - \(cs.weekOfMonth)")
         print("=========================")
         
-        let d2 = view?.getFirstWeekDayOfWeek(date: Date(),weekDay: 1)
+        let d2 = view?.getWeekDayOfWeek(date: Date(),weekDay: 1)
         let cs2 =  d2!==>
         print("=========================")
         print("the year - \(cs2.year) , the month - \(cs2.month) , the day - \(cs2.day) , the weekday - \(cs2.weekday) , the weekofmonth - \(cs2.weekOfMonth)")
@@ -89,19 +89,31 @@ class SNCalendarTests: XCTestCase {
     }
     
     func testExample() {
-        let dayNum = CalendarUntil().getDaysNum(month: 3, year: 2017)
+        let dayNum = view?.getDaysNum(month: 3, year: 2017)
         
         var a = [Date]()
-        for i in 0..<dayNum {
-            let d = CalendarUntil().getDate(year: 2017, month: 3, day: i+1)
-            let cs = d==>
+        for i in 0..<dayNum! {
+            let d = view?.getDate(year: 2017, month: 3, day: i+1)
+            let cs = d!==>
             print("=========================")
             print(" \(cs.year!)  - \(cs.month!)  - \(cs.day!)")
             print("=========================")
-            a.append(d)
+            a.append(d!)
         }
     }
     
+    func testOP() {
+        var a = 8
+        var b = 8
+        
+        a -= 1
+        
+        b += 1
+        
+        print("=========================")
+        print("a - \(a) , b - \(b)")
+        print("=========================")
+    }
 
     
     func testOper() {

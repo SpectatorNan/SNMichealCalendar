@@ -10,7 +10,7 @@ import UIKit
 
 class SNMichealCalendar: UIView {
     
-    var calendarUntil = CalendarUntil()
+    var calendarUntil = CalendarUntil.current
     
     var selectedDate: Date?
     
@@ -44,61 +44,39 @@ class SNMichealCalendar: UIView {
         let contentView = UIView()
         addSubview(contentView)
         
-        let confirBtn = UIButton()
-        contentView.addSubview(confirBtn)
-        confirBtn.setTitle("确定", for: .normal)
-        confirBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        confirBtn.setTitleColor(UIColor(netHex: 0x00a8c2), for: .normal)
+        let menuView = SNMichealCalendarMenuView(frame: CGRect.zero, year: showYear, month: showMonth)
+        contentView.addSubview(menuView)
         
-        let nextBtn = UIButton()
-        contentView.addSubview(nextBtn)
-        nextBtn.setImage(UIImage(named:"rightArrow"), for: .normal)
+        let calendarHorizonView = SNMichealCalendarHorizonView(frame: CGRect.zero)
+        contentView.addSubview(calendarHorizonView)
         
-        let monthBtn = UIButton()
-        contentView.addSubview(monthBtn)
-        monthBtn.setTitle("\(showYear)年\(showMonth)月", for: .normal)
-        monthBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        monthBtn.setTitleColor(.black, for: .normal)
-        
-        let lastBtn = UIButton()
-        contentView.addSubview(lastBtn)
-        lastBtn.setImage(UIImage(named:"leftArrow"), for: .normal)
-        
-        let calendarView = SNMichealCalendarView(date: Date(), frame: CGRect.zero)
-        contentView.addSubview(calendarView)
-        confirBtn.snp.makeConstraints { (make) in
+        menuView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(38))
-            make.right.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-50))
-            
-        }
-        
-        monthBtn.snp.makeConstraints { (layout) in
-            layout.centerX.equalToSuperview()
-            layout.top.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(38))
-        }
-        
-        nextBtn.snp.makeConstraints { (layout) in
-            
-            layout.left.equalTo(monthBtn.snp.right).offset(SNMichealCalendar_adjustSizeAPP(40))
-            layout.top.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(38))
-            layout.size.equalTo(CGSize(width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
-        }
-        
-        lastBtn.snp.makeConstraints { (layout) in
-            layout.top.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(38))
-            layout.right.equalTo(monthBtn.snp.left).offset(SNMichealCalendar_adjustSizeAPP(-40))
-            layout.size.equalTo(CGSize(width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
-        }
-        
-        calendarView.snp.makeConstraints { (make) in
-        make.top.equalTo(monthBtn.snp.bottom).offset(SNMichealCalendar_adjustSizeAPP(38.6))
             make.right.left.equalToSuperview()
+            make.height.equalTo(SNMichealCalendar_adjustSizeAPP(54+38))
         }
+        
+        
+        
+        calendarHorizonView.snp.makeConstraints { (make) in
+        make.top.equalTo(menuView.snp.bottom).offset(SNMichealCalendar_adjustSizeAPP(38.6))
+            make.right.left.equalToSuperview()
+            make.height.equalTo(calendarHorizonView.viewHeight!)
+        }
+        
+//        calendarView.snp.makeConstraints { (make) in
+//            make.bottom.equalToSuperview()
+//            make.size.equalToSuperview()
+//        }
         
         contentView.snp.makeConstraints { (layout) in
             layout.edges.equalToSuperview()
         }
+        
+       
     }
     
 
 }
+
+

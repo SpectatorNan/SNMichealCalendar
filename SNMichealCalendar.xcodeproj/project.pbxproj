@@ -57,6 +57,8 @@
 		760AB7BF1E79AEE300C29F43 /* SNMichealCalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB7BE1E79AEE300C29F43 /* SNMichealCalenderCell.swift */; };
 		760AB7FD1E7AD75800C29F43 /* SNCalendarUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB7FC1E7AD75800C29F43 /* SNCalendarUntil.swift */; };
 		760AB7FF1E7AD9B100C29F43 /* SNMichealCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB7FE1E7AD9B100C29F43 /* SNMichealCalendar.swift */; };
+		760AB83F1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB83E1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift */; };
+		760AB8411E7C217800C29F43 /* SNMichealCalendarMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB8401E7C217800C29F43 /* SNMichealCalendarMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,8 @@
 		760AB7BE1E79AEE300C29F43 /* SNMichealCalenderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalenderCell.swift; sourceTree = "<group>"; };
 		760AB7FC1E7AD75800C29F43 /* SNCalendarUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNCalendarUntil.swift; sourceTree = "<group>"; };
 		760AB7FE1E7AD9B100C29F43 /* SNMichealCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendar.swift; sourceTree = "<group>"; };
+		760AB83E1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendarHorizonView.swift; sourceTree = "<group>"; };
+		760AB8401E7C217800C29F43 /* SNMichealCalendarMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendarMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +257,8 @@
 				760AB7BC1E79AE7C00C29F43 /* SNMichealCalendarWeekReusableView.swift */,
 				760AB7FE1E7AD9B100C29F43 /* SNMichealCalendar.swift */,
 				747293F41E7BB4C200DF1BFD /* SNOperator.swift */,
+				760AB83E1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift */,
+				760AB8401E7C217800C29F43 /* SNMichealCalendarMenuView.swift */,
 			);
 			path = SNMichealCalenders;
 			sourceTree = "<group>";
@@ -485,6 +491,7 @@
 				760AB7FF1E7AD9B100C29F43 /* SNMichealCalendar.swift in Sources */,
 				760AB7B31E7988D000C29F43 /* ConstraintRelation.swift in Sources */,
 				760AB7A21E7988D000C29F43 /* ConstraintInsets.swift in Sources */,
+				760AB83F1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift in Sources */,
 				760AB79F1E7988D000C29F43 /* ConstraintConstantTarget.swift in Sources */,
 				760AB7AE1E7988D000C29F43 /* ConstraintMakerRelatable.swift in Sources */,
 				760AB7B71E7988D000C29F43 /* Debugging.swift in Sources */,
@@ -500,6 +507,7 @@
 				760AB7B21E7988D000C29F43 /* ConstraintRelatableTarget.swift in Sources */,
 				760AB7B91E7988D000C29F43 /* LayoutConstraint.swift in Sources */,
 				760AB7BD1E79AE7C00C29F43 /* SNMichealCalendarWeekReusableView.swift in Sources */,
+				760AB8411E7C217800C29F43 /* SNMichealCalendarMenuView.swift in Sources */,
 				747293F51E7BB4C200DF1BFD /* SNOperator.swift in Sources */,
 				760AB7BF1E79AEE300C29F43 /* SNMichealCalenderCell.swift in Sources */,
 				760AB7A91E7988D000C29F43 /* ConstraintMaker.swift in Sources */,

@@ -32,7 +32,7 @@ class SNMichealCalendarView: UIView {
     var numberOfDaysNextMonth: Int?  //= 7 - firstWeekDayNM;  //显示下个月格子数：
     var sumDays: Int?  //= totalDayThisMonth + nextSum + lastSum  显示总各自数
     
-    var calendarUntil = CalendarUntil()
+    var calendarUntil = CalendarUntil.current
     
     
     let itemSpace = SNMichealCalendar_adjustSizeAPP(38.6)
@@ -163,6 +163,7 @@ class SNMichealCalendarView: UIView {
             layout.bottom.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-40))
         }
         
+        viewHeight = colH+SNMichealCalendar_adjustSizeAPP(40)
  
     }
     

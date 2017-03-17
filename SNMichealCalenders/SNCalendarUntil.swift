@@ -10,6 +10,11 @@ import UIKit
 
 class CalendarUntil {
     
+   static let current = CalendarUntil()
+    private init() {
+
+    }
+    
     let date = Date()
     
     lazy var comps : DateComponents = {
