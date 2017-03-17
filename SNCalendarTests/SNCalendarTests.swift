@@ -94,7 +94,7 @@ class SNCalendarTests: XCTestCase {
         var a = [Date]()
         for i in 0..<dayNum {
             let d = CalendarUntil().getDate(year: 2017, month: 3, day: i+1)
-            let cs = CalendarUntil().dateConvertToComponents(date: d)
+            let cs = d==>
             print("=========================")
             print(" \(cs.year!)  - \(cs.month!)  - \(cs.day!)")
             print("=========================")

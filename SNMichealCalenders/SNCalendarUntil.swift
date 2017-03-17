@@ -78,7 +78,7 @@ extension CalendarUntil {
         comps.day = day
         
         let date = calendar.date(from: comps)
-        let weekdayComps =  date==>
+        let weekdayComps =  date!==>
         
         var weekDayNum = weekdayComps.weekday! - 1
         
