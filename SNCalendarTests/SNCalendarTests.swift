@@ -29,7 +29,7 @@ class SNCalendarTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let d = view?.getLastDayOfMonth(date: Date())
-        let cs = Calendar.current.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: d!)
+        let cs = d!==>
         print("=========================")
         print("the year - \(cs.year) , the month - \(cs.month) , the day - \(cs.day) , the weekday - \(cs.weekday) , the weekofmonth - \(cs.weekOfMonth)")
         print("=========================")
@@ -54,13 +54,13 @@ class SNCalendarTests: XCTestCase {
     func testGetFirstWeekdayOfMonth() {
         
         let d = view?.getFirstWeekDayOfMonth(date: Date())
-        let cs = Calendar.current.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: d!)
+        let cs =  d!==>
         print("=========================")
         print("the year - \(cs.year) , the month - \(cs.month) , the day - \(cs.day) , the weekday - \(cs.weekday) , the weekofmonth - \(cs.weekOfMonth)")
         print("=========================")
         
         let d2 = view?.getFirstWeekDayOfWeek(date: Date())
-        let cs2 = Calendar.current.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: d2!)
+        let cs2 =  d2!==>
         print("=========================")
         print("the year - \(cs2.year) , the month - \(cs2.month) , the day - \(cs2.day) , the weekday - \(cs2.weekday) , the weekofmonth - \(cs2.weekOfMonth)")
         print("=========================")
@@ -88,7 +88,43 @@ class SNCalendarTests: XCTestCase {
         print("=========================")
     }
     
+    func testExample() {
+        let dayNum = CalendarUntil().getDaysNum(month: 3, year: 2017)
+        
+        var a = [Date]()
+        for i in 0..<dayNum {
+            let d = CalendarUntil().getDate(year: 2017, month: 3, day: i+1)
+            let cs = CalendarUntil().dateConvertToComponents(date: d)
+            print("=========================")
+            print(" \(cs.year!)  - \(cs.month!)  - \(cs.day!)")
+            print("=========================")
+            a.append(d)
+        }
+    }
     
+    func testGuard() {
+        guard true else {
+            print("=========================")
+            print("true")
+            print("=========================")
+            return
+        }
+        
+        guard false else {
+            print("=========================")
+            print("false")
+            print("=========================")
+            return
+        }
+    }
+    
+    func testOper() {
+        let cs2 = Date()==>
+        
+        print("=========================")
+        print("the year - \(cs2.year) , the month - \(cs2.month) , the day - \(cs2.day) , the weekday - \(cs2.weekday) , the weekofmonth - \(cs2.weekOfMonth)")
+        print("=========================")
+    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.

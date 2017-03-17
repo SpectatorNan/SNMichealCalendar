@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		747293ED1E7A594400DF1BFD /* SNCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747293EC1E7A594400DF1BFD /* SNCalendarTests.swift */; };
+		747293F51E7BB4C200DF1BFD /* SNOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747293F41E7BB4C200DF1BFD /* SNOperator.swift */; };
 		760AB7401E794BC400C29F43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB73F1E794BC400C29F43 /* AppDelegate.swift */; };
 		760AB7421E794BC400C29F43 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB7411E794BC400C29F43 /* ViewController.swift */; };
 		760AB7451E794BC400C29F43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760AB7431E794BC400C29F43 /* Main.storyboard */; };
@@ -86,6 +87,7 @@
 		747293EA1E7A594400DF1BFD /* SNCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SNCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		747293EC1E7A594400DF1BFD /* SNCalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNCalendarTests.swift; sourceTree = "<group>"; };
 		747293EE1E7A594400DF1BFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		747293F41E7BB4C200DF1BFD /* SNOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNOperator.swift; sourceTree = "<group>"; };
 		760AB73C1E794BC400C29F43 /* SNMichealCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SNMichealCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		760AB73F1E794BC400C29F43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		760AB7411E794BC400C29F43 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				760AB7731E79516D00C29F43 /* SNMichealCalendarView.swift */,
 				760AB7BC1E79AE7C00C29F43 /* SNMichealCalendarWeekReusableView.swift */,
 				760AB7FE1E7AD9B100C29F43 /* SNMichealCalendar.swift */,
+				747293F41E7BB4C200DF1BFD /* SNOperator.swift */,
 			);
 			path = SNMichealCalenders;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				760AB7B21E7988D000C29F43 /* ConstraintRelatableTarget.swift in Sources */,
 				760AB7B91E7988D000C29F43 /* LayoutConstraint.swift in Sources */,
 				760AB7BD1E79AE7C00C29F43 /* SNMichealCalendarWeekReusableView.swift in Sources */,
+				747293F51E7BB4C200DF1BFD /* SNOperator.swift in Sources */,
 				760AB7BF1E79AEE300C29F43 /* SNMichealCalenderCell.swift in Sources */,
 				760AB7A91E7988D000C29F43 /* ConstraintMaker.swift in Sources */,
 				760AB79D1E7988D000C29F43 /* ConstraintAttributes.swift in Sources */,

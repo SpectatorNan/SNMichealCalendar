@@ -10,9 +10,10 @@ import UIKit
 
 class CalendarUntil {
     
+    let date = Date()
     
     lazy var comps : DateComponents = {
-        let comps = Calendar.current.dateComponents([.year,.month,.day], from: Date())
+        let comps = self.date==>
         return comps
     }()
     
@@ -33,16 +34,30 @@ class CalendarUntil {
     
 }
 
+enum CalendarMethod {
+    
+    enum convert {
+        case date
+    }
+}
+
+extension CalendarUntil {
+    
+    
+    
+}
+
 // get message
 extension CalendarUntil {
-    // 当月总共天数
+    
+    /// 当月总共天数
     func getCurrentMonthDaysNum(date: Date) -> Int {
         
         let range = calendar.range(of: .day, in: .month, for: date)
         
         return (range?.count)!
     }
-    // 某年某月多少天
+    /// 某年某月多少天
     func getDaysNum(month: Int, year: Int) -> Int {
         var comps = DateComponents()
         comps.month = month
@@ -63,7 +78,7 @@ extension CalendarUntil {
         comps.day = day
         
         let date = calendar.date(from: comps)
-        let weekdayComps = calendar.dateComponents([.weekday], from: date!)
+        let weekdayComps =  date==>
         
         var weekDayNum = weekdayComps.weekday! - 1
         
@@ -80,8 +95,8 @@ extension CalendarUntil {
         let firstD = getFirstDayOfMonth(date: date)
         let lastD = getLastDayOfMonth(date: date)
         
-        let csf = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: firstD)
-        let csl = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: lastD)
+        let csf =  firstD==>
+        let csl =  lastD==>
         
         let result = (csl.year! - csf.year! + 52 + 1) % 52
         
@@ -91,7 +106,7 @@ extension CalendarUntil {
     //    本月的第一天
     func getFirstDayOfMonth(date: Date) -> Date {
         
-        let compCurrDate = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: date)
+        let compCurrDate =  date==>
         
         var compNewDate = DateComponents()
         compNewDate.year = compCurrDate.year
@@ -105,7 +120,7 @@ extension CalendarUntil {
     //     本月的最后一天
     func getLastDayOfMonth(date: Date) -> Date {
         
-        let compCurrDate = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: date)
+        let compCurrDate =  date==>
         
         var compNewDate = DateComponents()
         compNewDate.year = compCurrDate.year
@@ -119,7 +134,7 @@ extension CalendarUntil {
     func getWeekNumsOfMonth(date: Date) -> Int {
         
         let d = getLastDayOfMonth(date: date)
-        let cs = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: d)
+        let cs =  d==>
         return cs.weekOfMonth!
     }
     
@@ -137,7 +152,7 @@ extension CalendarUntil {
     //本周第一个周日是哪天
     func getFirstWeekDayOfWeek(date: Date) -> Date {
         
-        let cs = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: date)
+        let cs =  date==>
         
         var ncs = DateComponents()
         ncs.year = cs.year
@@ -162,6 +177,18 @@ extension CalendarUntil {
         
         return d!
     }
+    
+    /// 获取本月日期数组
+    func getDaysOfMonth(year: Int, month: Int) -> Array<Date> {
+        let dayNum = getDaysNum(month: month, year: year)
+        
+        var a = [Date]()
+        for i in 0..<dayNum {
+            let d = getDate(year: year, month: month, day: i+1)
+            a.append(d)
+        }
+        return a
+    }
 }
 
 // make compare
@@ -169,8 +196,8 @@ extension CalendarUntil {
     // 是否同一个月
     func compareIsSameMonth(dateA: Date, dateB: Date) -> Bool {
         
-        let csA = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateA)
-        let csB = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateB)
+        let csA =  dateA==>
+        let csB =  dateB==>
         
         let compare = csA.year == csB.year && csA.month == csB.month
         
@@ -180,8 +207,8 @@ extension CalendarUntil {
     //    是否同一周
     func compareIsSameWeek(dateA: Date, dateB: Date) -> Bool {
         
-        let csA = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateA)
-        let csB = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth,.weekOfYear], from: dateB)
+        let csA =  dateA==>
+        let csB =  dateB==>
         
         let compare = csA.year == csB.year && csA.weekOfYear == csB.weekOfYear
         
@@ -191,10 +218,10 @@ extension CalendarUntil {
     //    是否同一天
     func compareIsSameDay(dateA: Date, dateB: Date) -> Bool {
         
-        let csA = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth], from: dateA)
-        let csB = calendar.dateComponents([.year,.month,.day,.weekday,.weekOfMonth,.weekOfYear], from: dateB)
+        let csA =  dateA==>
+        let csB =  dateB==>
         
-        let compare = csA.year == csB.year && csA.month == csB.month && csA.day == csB.year
+        let compare = csA.year == csB.year && csA.month == csB.month && csA.day == csB.day
         
         return compare
     }

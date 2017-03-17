@@ -24,11 +24,11 @@ class SNMichealCalendarView: UIView {
     var viewHeight : CGFloat? = nil;
     var viewWidth : CGFloat? = nil;
     
-    var numberOfDaysCurrentMonth: Int? //本月总天数
-    var numberOfDaysLastMonth: Int?  //上月总天数 :
-    var firstDayCurrentMonth: Int? //本月第一天周几：
-    var firstDayNextMonth: Int?  //下月第一天周几：
-    var lastDayLastMonth: Int?  // = fisrtWeekDay //显示上个月格子数：
+//    var numberOfDaysCurrentMonth: Int? //本月总天数
+//    var numberOfDaysLastMonth: Int?  //上月总天数 :
+    var firstWeekDay: Int? //本月第一天周几：
+    var firstWeekDayOfNextMonth: Int?  //下月第一天周几：
+    var weekdaysOfLastMonth: Int?  // = fisrtWeekDay //显示上个月格子数：
     var numberOfDaysNextMonth: Int?  //= 7 - firstWeekDayNM;  //显示下个月格子数：
     var sumDays: Int?  //= totalDayThisMonth + nextSum + lastSum  显示总各自数
     
@@ -38,13 +38,22 @@ class SNMichealCalendarView: UIView {
     let itemSpace = SNMichealCalendar_adjustSizeAPP(38.6)
     let itemSize = SNMichealCalendar_adjustSizeAPP(54)
 
-    
+    var selectedDate: Date?
     var currentYear: Int
     var currentMonth: Int
     var date: Date
+    var currentDays: [Date]?
+    
+    
+    func fetchDays() {
+        
+        currentDays = calendarUntil.getDaysOfMonth(year: currentYear, month: currentMonth)
+       
+    }
+    
     init(date: Date, frame: CGRect) {
         
-        let cs = calendarUntil.calendar.dateComponents([.month,.year], from: date)
+        let cs = date==>
         currentMonth = cs.month!
         currentYear = cs.year!
         self.date = date
@@ -104,31 +113,33 @@ class SNMichealCalendarView: UIView {
     
     func getCurrentMonth() {
 
+        fetchDays()
         
-        
-        numberOfDaysCurrentMonth = calendarUntil.getCurrentMonthDaysNum(date: date)
-        
-        numberOfDaysLastMonth = calendarUntil.getDaysNum(month: currentMonth - 1, year: currentYear)
-        
-        firstDayCurrentMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth, year: currentYear)
-        firstDayNextMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth+1, year: currentYear)
-        
-        
-        if firstDayCurrentMonth == 7 {
-            lastDayLastMonth = 0
-        } else {
-            lastDayLastMonth = firstDayCurrentMonth
-        }
-        
-        numberOfDaysNextMonth = 7 - firstDayNextMonth!
-        
-        guard let s1 = numberOfDaysCurrentMonth else {
+        guard let days = currentDays else {
             return
         }
+        
+//        numberOfDaysCurrentMonth = days.count
+        
+//        numberOfDaysLastMonth = calendarUntil.getDaysNum(month: currentMonth - 1, year: currentYear)
+        
+        firstWeekDay = calendarUntil.getWeekDay(day: 1, month: currentMonth, year: currentYear)
+        firstWeekDayOfNextMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth+1, year: currentYear)
+        
+        
+        if firstWeekDay == 7 {
+            weekdaysOfLastMonth = 0
+        } else {
+            weekdaysOfLastMonth = firstWeekDay
+        }
+        
+        numberOfDaysNextMonth = 7 - firstWeekDayOfNextMonth!
+        
+       let s1 = days.count
         guard let s2 = numberOfDaysNextMonth else {
             return
         }
-        guard let s3 = lastDayLastMonth else {
+        guard let s3 = weekdaysOfLastMonth else {
             return
         }
         sumDays = s1 + s2 + s3
@@ -143,6 +154,7 @@ class SNMichealCalendarView: UIView {
         let row = (sumDays!+6)/(7)
 //        let row = getWeekNumsOfMonth(date: Date())
         let colH = CGFloat(row)  * SNMichealCalendar_adjustSizeAPP(54+38.6) + SNMichealCalendar_adjustSizeAPP(40) + SNMichealCalendar_adjustSizeAPP(54)
+        
         collectionView.snp.makeConstraints { (layout) in
             layout.top.equalToSuperview()
             layout.right.equalToSuperview().offset(SNMichealCalendar_adjustSizeAPP(-70))
@@ -156,20 +168,14 @@ class SNMichealCalendarView: UIView {
     
 }
 
-//extension SNMichealCalendarView : UICollectionViewDelegateFlowLayout {
-//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        let headerW = SN_ScreenW - SNMichealCalendar_adjustSizeAPP(140)
-//        let headerH = self.itemSize
-//        return CGSize(width: headerW, height: headerH)
-//    }
-//}
-
 extension SNMichealCalendarView : UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return sumDays!
+        guard let count = sumDays else {
+            return 0
+        }
+        return count
     }
     
     
@@ -178,44 +184,74 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SNMichealCalendar_colCellID, for: indexPath) as! SNMichealCalendarCell
         
-
+        guard let fd = firstWeekDay else {
+            cell.empty()
+            return cell
+        }
         
-        // show last month day 
-      if indexPath.row < lastDayLastMonth! {
-            let n = numberOfDaysLastMonth! - firstDayCurrentMonth! + 1 + indexPath.row
-            cell.text = String(format: "%ld", n)
-//            cell.style = .none
-//            cell.isHidden = true
-        } else if indexPath.row < numberOfDaysCurrentMonth!+lastDayLastMonth!{
-            // select month show
-            let n = indexPath.row + 1 - lastDayLastMonth!
-            cell.text = String(format: "%ld", n)
-            
-            let sd = calendarUntil.getDate(year: currentYear, month: currentMonth, day: n)
-            itemStyle( sd , calendarUntil.compareIsSameMonth(dateA: sd, dateB: Date()), cell)
-//            cell.style = .border
-        } else {
-            let n = indexPath.row + 1 - numberOfDaysCurrentMonth! - lastDayLastMonth!
-            cell.text = String(format: "%ld", n)
-//            cell.style = .overall
-//            cell.isHidden = true
+
+        guard let days = currentDays,
+            days.count != 0 else {
+                cell.empty()
+            return cell
         }
         
         
         
+//        if indexPath.row < fd {} else
+            if indexPath.row >= fd && indexPath.row < fd+days.count {
+            let d = days[indexPath.row-fd]
+                cell.date = d
+                itemStyle( d , calendarUntil.compareIsSameMonth(dateA: d, dateB: calendarUntil.date), cell)
+        }
+            else {
+        
+        cell.empty()
+        }
+    
         return cell
-        
-        
+   
     }
     
     func itemStyle(_ showDay: Date,_ isCurrentMonth: Bool,_ cell: SNMichealCalendarCell) {
-    
-        if isCurrentMonth {
-            let cs = calendarUntil.calendar.dateComponents([.day], from: showDay)
-            itemStyle(cs.day! , cell)
-        } else {
-            cell.style = .before
+        let cd = calendarUntil.date
+        guard let selD = selectedDate else {
+            
+            if calendarUntil.compareIsSameDay(dateA: showDay, dateB: cd) {
+                cell.style = .select
+            } else if calendarUntil.compare(dateA: showDay, isAfter: cd) {
+                cell.style = .after
+            } else if calendarUntil.compare(dateA: showDay, isBefore: cd) {
+                cell.style = .before
+            } else {
+                cell.style = .empty // 感觉这一步可以省略
+            }
+            return
         }
+        
+        if calendarUntil.compareIsSameDay(dateA: selD, dateB: cd) && calendarUntil.compareIsSameDay(dateA: showDay, dateB: cd) {
+            cell.style = .select
+        } else if calendarUntil.compareIsSameDay(dateA: selD, dateB: showDay) {
+            cell.style = .select
+        } else if calendarUntil.compareIsSameDay(dateA: showDay, dateB: cd) {
+            cell.style = .current
+        } else if calendarUntil.compare(dateA: showDay, isAfter: cd) {
+            cell.style = .after
+        } else if calendarUntil.compare(dateA: showDay, isBefore: cd) {
+            cell.style = .before
+        } else {
+            cell.style = .empty // 感觉这一步可以省略
+        }
+    
+//        if isCurrentMonth {
+//            let cs = calendarUntil.dateConvertToComponents(date: showDay)
+//            itemStyle(cs.day! , cell)
+//            
+//            
+//            
+//        } else {
+//            cell.style = .before
+//        }
     }
     
     func itemStyle(_ showDay: Int, _ cell: SNMichealCalendarCell) {
@@ -254,6 +290,11 @@ extension SNMichealCalendarView : UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("click itme \(indexPath.row)")
+        let c = collectionView.cellForItem(at: indexPath) as! SNMichealCalendarCell
+        guard let d = c.date else {
+            return
+        }
+        selectedDate = d
         collectionView.reloadData()
     }
     

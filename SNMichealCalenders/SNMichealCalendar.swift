@@ -12,6 +12,8 @@ class SNMichealCalendar: UIView {
     
     var calendarUntil = CalendarUntil()
     
+    var selectedDate: Date?
+    
     lazy var showYear : Int = {
         
         return self.calendarUntil.comps.year!

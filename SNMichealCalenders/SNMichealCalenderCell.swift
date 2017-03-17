@@ -13,11 +13,12 @@ enum SNMichealCalendarCellStyle {
     case select
     case current
     case before
+    case empty
 }
 
 protocol SNMichealCalendarCellContent {
     var style: SNMichealCalendarCellStyle { get set }
-    var text: String {set get }
+    var date: Date? {set get }
 }
 
 class SNMichealCalendarCell: UICollectionViewCell, SNMichealCalendarCellContent {
@@ -26,6 +27,7 @@ class SNMichealCalendarCell: UICollectionViewCell, SNMichealCalendarCellContent 
     let grayColor = UIColor(netHex: 0xbdbdbd)
     let blackColor = UIColor(netHex: 0x565656)
     
+    private var today: Date?
     private var showStyle : SNMichealCalendarCellStyle = .before
     fileprivate lazy var content : UILabel = {
        var content = UILabel(frame: CGRect(x: 0, y: 0, width: SNMichealCalendar_adjustSizeAPP(54), height: SNMichealCalendar_adjustSizeAPP(54)))
@@ -46,14 +48,33 @@ class SNMichealCalendarCell: UICollectionViewCell, SNMichealCalendarCellContent 
         }
     }
     
-    var text: String {
+    var date: Date? {
         get {
-            return content.text!
+            return today!
         }
         set {
-            content.text = newValue
+            changeToday(date: newValue)
+            today = newValue
         }
     }
+    
+    func empty() {
+    changeToday(date: nil)
+    style = .empty
+    }
+    
+    private func changeToday(date: Date?) {
+        
+        guard let d = date else {
+            content.text = ""
+            return
+        }
+        
+        let cs = d==>
+        
+        content.text = String(format: "%ld", cs.day!)
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,8 +100,11 @@ fileprivate extension SNMichealCalendarCell {
             overallStyle()
         case .after:
             grayStyle()
-        default:
+        case .before:
             noneStyle()
+        
+        default:
+            emptyStyle()
         }
     }
     
@@ -118,5 +142,14 @@ fileprivate extension SNMichealCalendarCell {
         content.backgroundColor = .white
         content.clipsToBounds = true
         content.textColor = grayColor
+    }
+    
+    func emptyStyle() {
+        content.layer.borderColor = UIColor.clear.cgColor
+        content.layer.cornerRadius = SNMichealCalendar_adjustSizeAPP(27)
+        content.layer.borderWidth = 2
+        content.backgroundColor = .clear
+        content.clipsToBounds = true
+        content.textColor = .clear
     }
 }
