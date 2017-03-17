@@ -63,8 +63,8 @@ class SNMichealCalendarView: UIView {
         setupView()
     }
     
-    var firstShow = true
-    var isClickReload = false
+//    var firstShow = true
+//    var isClickReload = false
     
     lazy var collectionView: UICollectionView = {
         
@@ -202,7 +202,7 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
             if indexPath.row >= fd && indexPath.row < fd+days.count {
             let d = days[indexPath.row-fd]
                 cell.date = d
-                itemStyle( d , calendarUntil.compareIsSameMonth(dateA: d, dateB: calendarUntil.date), cell)
+                itemStyle( d ,  d |=== calendarUntil.date, cell)
         }
             else {
         
@@ -217,57 +217,56 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         let cd = calendarUntil.date
         guard let selD = selectedDate else {
             
-            if calendarUntil.compareIsSameDay(dateA: showDay, dateB: cd) {
+            if  showDay |=== cd {
+                
                 cell.style = .select
-            } else if calendarUntil.compare(dateA: showDay, isAfter: cd) {
+                
+            }  else if ( showDay >=== cd) {
+                
                 cell.style = .after
-            } else if calendarUntil.compare(dateA: showDay, isBefore: cd) {
+                
+            } else if ( showDay <=== cd) {
+                
                 cell.style = .before
+                
             } else {
+                
                 cell.style = .empty // 感觉这一步可以省略
             }
+            
             return
         }
         
-        if calendarUntil.compareIsSameDay(dateA: selD, dateB: cd) && calendarUntil.compareIsSameDay(dateA: showDay, dateB: cd) {
+        
+        if (selD |=== cd) && (showDay |=== cd) {
+            
             cell.style = .select
-        } else if calendarUntil.compareIsSameDay(dateA: selD, dateB: showDay) {
+            
+        } else if  selD |=== showDay {
+            
             cell.style = .select
-        } else if calendarUntil.compareIsSameDay(dateA: showDay, dateB: cd) {
+            
+        } else if  showDay |=== cd {
+            
             cell.style = .current
-        } else if calendarUntil.compare(dateA: showDay, isAfter: cd) {
+            
+        } else if ( showDay >=== cd) {
+            
             cell.style = .after
-        } else if calendarUntil.compare(dateA: showDay, isBefore: cd) {
+            
+        } else if ( showDay <=== cd) {
+            
             cell.style = .before
+            
         } else {
+            
             cell.style = .empty // 感觉这一步可以省略
         }
-    
-//        if isCurrentMonth {
-//            let cs = calendarUntil.dateConvertToComponents(date: showDay)
-//            itemStyle(cs.day! , cell)
-//            
-//            
-//            
-//        } else {
-//            cell.style = .before
-//        }
+        
+        
     }
     
-    func itemStyle(_ showDay: Int, _ cell: SNMichealCalendarCell) {
-        if showDay < calendarUntil.comps.day! {
-            cell.style = .before
-        } else if showDay == calendarUntil.comps.day! {
-            if firstShow {
-            cell.style = .select
-            } else {
-                cell.style = .current
-            }
-        } else {
-            cell.style = .after
-        }
-    }
-    
+
     
     
      public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

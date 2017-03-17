@@ -34,6 +34,7 @@ class CalendarUntil {
     
 }
 
+// 占位
 enum CalendarMethod {
 
     case assignDateToDate //指定年月日，获取某天(Date)
@@ -64,14 +65,6 @@ enum CalendarMethod {
     
 }
 
-extension CalendarUntil {
-    
-//    func untilMethod(function: CalendarMethod) -> (Any, Any, Any) -> Date {
-//        
-//
-//    }
-    
-}
 
 // get message
 extension CalendarUntil {
@@ -217,61 +210,64 @@ extension CalendarUntil {
     }
 }
 
+//    是否同一天
+infix operator |===
+func |===(dateA: Date, dateB: Date) -> Bool {
+    let csA =  dateA==>
+    let csB =  dateB==>
+    
+    let compare = csA.year == csB.year && csA.month == csB.month && csA.day == csB.day
+    
+    return compare
+}
+
+//    是否同一周
+infix operator ||==
+func ||==(dateA: Date, dateB: Date) -> Bool {
+    let csA =  dateA==>
+    let csB =  dateB==>
+    
+    let compare = csA.year == csB.year && csA.weekOfYear == csB.weekOfYear
+    
+    return compare
+}
+
+
+// 是否同一个月
+infix operator |||=
+func |||=(dateA: Date, dateB: Date) -> Bool {
+    let csA =  dateA==>
+    let csB =  dateB==>
+    
+    let compare = csA.year == csB.year && csA.month == csB.month
+    
+    return compare
+}
+
+//    是否在某天之后(含当天)
+infix operator >===
+func >===(dateA: Date, dateB: Date) -> Bool {
+    
+    let compare = dateA.compare(dateB) == .orderedDescending || ( dateA |=== dateB)
+    
+    return compare
+}
+
+//    是否在某天之前(含当天)
+infix operator <===
+func <===(dateA: Date, dateB: Date) -> Bool {
+    
+    let compare = dateA.compare(dateB) == .orderedAscending || ( dateA |=== dateB)
+    
+    return compare
+}
+
 // make compare
-extension CalendarUntil {
-    // 是否同一个月
-    func compareIsSameMonth(dateA: Date, dateB: Date) -> Bool {
-        
-        let csA =  dateA==>
-        let csB =  dateB==>
-        
-        let compare = csA.year == csB.year && csA.month == csB.month
-        
-        return compare
-    }
-    
-    //    是否同一周
-    func compareIsSameWeek(dateA: Date, dateB: Date) -> Bool {
-        
-        let csA =  dateA==>
-        let csB =  dateB==>
-        
-        let compare = csA.year == csB.year && csA.weekOfYear == csB.weekOfYear
-        
-        return compare
-    }
-    
-    //    是否同一天
-    func compareIsSameDay(dateA: Date, dateB: Date) -> Bool {
-        
-        let csA =  dateA==>
-        let csB =  dateB==>
-        
-        let compare = csA.year == csB.year && csA.month == csB.month && csA.day == csB.day
-        
-        return compare
-    }
-    
-    //    是否在某天之后(含当天)
-    func compare(dateA: Date, isAfter dateB: Date) -> Bool {
-        
-        let compare = dateA.compare(dateB) == .orderedDescending || compareIsSameDay(dateA: dateA, dateB: dateB)
-        
-        return compare
-    }
-    
-    //    是否在某天之前(含当天)
-    func compare(dateA: Date, isBefore dateB: Date) -> Bool {
-        
-        let compare = dateA.compare(dateB) == .orderedAscending || compareIsSameDay(dateA: dateA, dateB: dateB)
-        
-        return compare
-    }
-    
+ extension CalendarUntil {
     //    是否在某段时间之间
     func compare(date:Date,between startDate: Date, and endDate: Date) -> Bool {
         
-        let compare1 = compare(dateA: date, isAfter: startDate) && compare(dateA: date, isBefore: endDate)
+        let compare1 =  (date >=== startDate) && (dateA: date <=== endDate)
         
         return compare1
     }
