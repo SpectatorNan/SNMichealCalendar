@@ -10,6 +10,9 @@ import UIKit
 
 class SNMichealCalendar: UIView {
     
+    
+    let manger = SNMichealCalendarManger()
+    
     var calendarUntil = CalendarUntil.current
     
     var selectedDate: Date?
@@ -44,10 +47,12 @@ class SNMichealCalendar: UIView {
         let contentView = UIView()
         addSubview(contentView)
         
-        let menuView = SNMichealCalendarMenuView(frame: CGRect.zero, year: showYear, month: showMonth)
+//        let menuView = SNMichealCalendarMenuView(frame: CGRect.zero, year: showYear, month: showMonth)
+        let menuView = SNMichealCalendarMenuView(frame: CGRect.zero, year: showYear, month: showMonth, manger: manger)
         contentView.addSubview(menuView)
         
-        let calendarHorizonView = SNMichealCalendarHorizonView(frame: CGRect.zero)
+//        let calendarHorizonView = SNMichealCalendarHorizonView(frame: CGRect.zero)
+        let calendarHorizonView = SNMichealCalendarHorizonView(frame: CGRect.zero, manager: manger)
         contentView.addSubview(calendarHorizonView)
         
         menuView.snp.makeConstraints { (make) in
@@ -73,7 +78,8 @@ class SNMichealCalendar: UIView {
             layout.edges.equalToSuperview()
         }
         
-       
+//       manger.horizonViewDelegate = menuView
+//        manger.menuViewDelegate = calendarHorizonView
     }
     
 

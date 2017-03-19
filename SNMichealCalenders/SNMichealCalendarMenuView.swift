@@ -10,8 +10,18 @@ import UIKit
 
 class SNMichealCalendarMenuView: UIView {
     
+    var menuViewDelegate: SNMichealCalendarMenuViewDelegate?
     var showYear: Int
     var showMonth: Int
+    
+    
+    init(frame: CGRect,year: Int, month: Int, manger: SNMichealCalendarMenuViewDelegate) {
+        self.showYear = year
+        self.showMonth = month
+        super.init(frame: frame)
+        menuViewDelegate = manger
+        setupView()
+    }
 
      init(frame: CGRect, year: Int, month: Int) {
         
@@ -90,7 +100,33 @@ class SNMichealCalendarMenuView: UIView {
 
 extension SNMichealCalendarMenuView {
     
-    func lastMonth() {
+    func loadPreView() {
+        archiveLastMonthData()
+    }
+    
+    func loadNextView() {
+        archiveNextMonthData()
+    }
+    
+    
+    
+    func selectMonth() {
+        
+    }
+    
+    @objc fileprivate func lastMonth() {
+        
+        menuViewDelegate?.preMenuView?()
+        archiveLastMonthData()
+    }
+    
+    @objc fileprivate func nextMonth() {
+        
+        menuViewDelegate?.nextMenuView?()
+        archiveNextMonthData()
+    }
+    
+    private func archiveLastMonthData() {
         showMonth -= 1
         if showMonth < 1 {
             showMonth = 12
@@ -100,7 +136,7 @@ extension SNMichealCalendarMenuView {
         updateContent()
     }
     
-    func nextMonth() {
+    private func archiveNextMonthData() {
         showMonth += 1
         if showMonth > 12 {
             showMonth = 1
@@ -110,11 +146,12 @@ extension SNMichealCalendarMenuView {
         updateContent()
     }
     
-    func selectMonth() {
-        
-    }
-    
-    func updateContent() {
+    private func updateContent() {
         self.monthBtn?.setTitle("\(showYear)年\(showMonth)月", for: .normal)
     }
+    
+    
+    
+    
 }
+

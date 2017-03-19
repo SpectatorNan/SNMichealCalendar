@@ -41,22 +41,17 @@ class SNMichealCalendarView: UIView {
     var selectedDate: Date?
     var currentYear: Int
     var currentMonth: Int
-    var date: Date
-    var currentDays: [Date]?
+    var currentDate = CalendarUntil.current.date
+    var currentDays: [Date]
     
     
-    func fetchDays() {
+    init(dates: [Date], frame: CGRect) {
         
-        currentDays = calendarUntil.getDaysOfMonth(year: currentYear, month: currentMonth)
-       
-    }
-    
-    init(date: Date, frame: CGRect) {
+        currentDays = dates
+        let cs = dates[0]==>
         
-        let cs = date==>
-        currentMonth = cs.month!
         currentYear = cs.year!
-        self.date = date
+        currentMonth = cs.month!
         
         super.init(frame: frame)
         getCurrentMonth()
@@ -113,16 +108,7 @@ class SNMichealCalendarView: UIView {
     
     func getCurrentMonth() {
 
-        fetchDays()
-        
-        guard let days = currentDays else {
-            return
-        }
-        
-//        numberOfDaysCurrentMonth = days.count
-        
-//        numberOfDaysLastMonth = calendarUntil.getDaysNum(month: currentMonth - 1, year: currentYear)
-        
+
         firstWeekDay = calendarUntil.getWeekDay(day: 1, month: currentMonth, year: currentYear)
         firstWeekDayOfNextMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth+1, year: currentYear)
         
@@ -135,7 +121,7 @@ class SNMichealCalendarView: UIView {
         
         numberOfDaysNextMonth = 7 - firstWeekDayOfNextMonth!
         
-       let s1 = days.count
+       let s1 = currentDays.count
         guard let s2 = numberOfDaysNextMonth else {
             return
         }
@@ -167,6 +153,10 @@ class SNMichealCalendarView: UIView {
  
     }
     
+    func calendarRelo() {
+        
+    }
+    
 }
 
 extension SNMichealCalendarView : UICollectionViewDataSource {
@@ -191,8 +181,7 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         }
         
 
-        guard let days = currentDays,
-            days.count != 0 else {
+        guard currentDays.count != 0 else {
                 cell.empty()
             return cell
         }
@@ -200,8 +189,8 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         
         
 //        if indexPath.row < fd {} else
-            if indexPath.row >= fd && indexPath.row < fd+days.count {
-            let d = days[indexPath.row-fd]
+            if indexPath.row >= fd && indexPath.row < fd+currentDays.count {
+            let d = currentDays[indexPath.row-fd]
                 cell.date = d
                 itemStyle( d ,  d |=== calendarUntil.date, cell)
         }

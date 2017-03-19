@@ -70,7 +70,7 @@ enum CalendarMethod {
     
 }
 
-
+// MARK: get some info
 // get message
 extension CalendarUntil {
     
@@ -215,6 +215,8 @@ extension CalendarUntil {
     }
 }
 
+
+// MARK: compare date
 //    是否同一天
 infix operator |===
 func |===(dateA: Date, dateB: Date) -> Bool {
@@ -277,4 +279,60 @@ func <===(dateA: Date, dateB: Date) -> Bool {
         return compare1
     }
 }
+
+// MARK: Calendar calculate
+extension CalendarUntil {
+    
+    func fetchLastMonth( year: Int, month: Int) -> (Int, Int) {
+    
+        var year = year
+        var month = month
+        
+        month -= 1
+        if month < 1 {
+            month = 12
+            year -= 1
+        }
+        
+        return (year, month)
+    }
+    
+    func fetchNextMonth( year: Int, month: Int) -> (Int, Int) {
+        
+        var year = year
+        var month = month
+        
+        month += 1
+        if month > 12 {
+            month = 1
+            year += 1
+        }
+        
+        return (year, month)
+    }
+    
+    func backAMonth( year: inout Int, month: inout Int) {
+
+        month -= 1
+        if month < 1 {
+            month = 12
+            year -= 1
+        }
+        
+    }
+    
+    func nextAMonth( year: inout Int, month: inout Int) {
+        
+        month += 1
+        if month > 12 {
+            month = 1
+            year += 1
+        }
+    }
+    
+    
+    
+}
+
+
 

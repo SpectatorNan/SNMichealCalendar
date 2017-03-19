@@ -59,6 +59,7 @@
 		760AB7FF1E7AD9B100C29F43 /* SNMichealCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB7FE1E7AD9B100C29F43 /* SNMichealCalendar.swift */; };
 		760AB83F1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB83E1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift */; };
 		760AB8411E7C217800C29F43 /* SNMichealCalendarMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB8401E7C217800C29F43 /* SNMichealCalendarMenuView.swift */; };
+		760AB8431E7D22E200C29F43 /* SNMichealCalendarManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760AB8421E7D22E200C29F43 /* SNMichealCalendarManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,7 @@
 		760AB7FE1E7AD9B100C29F43 /* SNMichealCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendar.swift; sourceTree = "<group>"; };
 		760AB83E1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendarHorizonView.swift; sourceTree = "<group>"; };
 		760AB8401E7C217800C29F43 /* SNMichealCalendarMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendarMenuView.swift; sourceTree = "<group>"; };
+		760AB8421E7D22E200C29F43 /* SNMichealCalendarManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNMichealCalendarManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 				747293F41E7BB4C200DF1BFD /* SNOperator.swift */,
 				760AB83E1E7BFB0D00C29F43 /* SNMichealCalendarHorizonView.swift */,
 				760AB8401E7C217800C29F43 /* SNMichealCalendarMenuView.swift */,
+				760AB8421E7D22E200C29F43 /* SNMichealCalendarManger.swift */,
 			);
 			path = SNMichealCalenders;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				760AB79E1E7988D000C29F43 /* ConstraintConfig.swift in Sources */,
 				760AB7741E79516D00C29F43 /* SNMichealCalendarView.swift in Sources */,
 				760AB7701E794FAF00C29F43 /* SNMichealCalendarFunction.swift in Sources */,
+				760AB8431E7D22E200C29F43 /* SNMichealCalendarManger.swift in Sources */,
 				760AB7BA1E7988D000C29F43 /* UILayoutGuide+Extensions.swift in Sources */,
 				760AB7B51E7988D000C29F43 /* ConstraintView.swift in Sources */,
 				760AB7AB1E7988D000C29F43 /* ConstraintMakerExtendable.swift in Sources */,
