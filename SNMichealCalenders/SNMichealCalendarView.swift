@@ -21,8 +21,8 @@ class SNMichealCalendarView: UIView {
     
 
     
-    var viewHeight : CGFloat? = nil;
-    var viewWidth : CGFloat? = nil;
+    var viewHeight : CGFloat?
+    var viewWidth : CGFloat?
     
 //    var numberOfDaysCurrentMonth: Int? //本月总天数
 //    var numberOfDaysLastMonth: Int?  //上月总天数 :
@@ -42,7 +42,19 @@ class SNMichealCalendarView: UIView {
     var currentYear: Int
     var currentMonth: Int
     var currentDate = CalendarUntil.current.date
-    var currentDays: [Date]
+    fileprivate var currentDays: [Date]
+        
+        
+    var dates : [Date] {
+        get {
+        return self.currentDays
+        }
+        
+        set {
+            self.currentDays = newValue
+            getCurrentMonth()
+        }
+    }
     
     
     init(dates: [Date], frame: CGRect) {
@@ -54,12 +66,10 @@ class SNMichealCalendarView: UIView {
         currentMonth = cs.month!
         
         super.init(frame: frame)
+        
         getCurrentMonth()
         setupView()
     }
-    
-//    var firstShow = true
-//    var isClickReload = false
     
     lazy var collectionView: UICollectionView = {
         
@@ -95,7 +105,8 @@ class SNMichealCalendarView: UIView {
         
         collection.delegate = self
         collection.dataSource = self
-        
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
         
         
         return collection
@@ -109,26 +120,28 @@ class SNMichealCalendarView: UIView {
     func getCurrentMonth() {
 
 
-        firstWeekDay = calendarUntil.getWeekDay(day: 1, month: currentMonth, year: currentYear)
-        firstWeekDayOfNextMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth+1, year: currentYear)
+//        firstWeekDay = calendarUntil.getWeekDay(day: 1, month: currentMonth, year: currentYear)
+//        firstWeekDayOfNextMonth = calendarUntil.getWeekDay(day: 1, month: currentMonth+1, year: currentYear)
+
+        firstWeekDay = currentDays[0]==>.weekday!
+        numberOfDaysNextMonth = 7 - currentDays[currentDays.count-1]==>.weekday!
         
+//        if firstWeekDay == 7 {
+//            weekdaysOfLastMonth = 0
+//        } else {
+//            weekdaysOfLastMonth = firstWeekDay
+//        }
         
-        if firstWeekDay == 7 {
-            weekdaysOfLastMonth = 0
-        } else {
-            weekdaysOfLastMonth = firstWeekDay
-        }
-        
-        numberOfDaysNextMonth = 7 - firstWeekDayOfNextMonth!
+//        numberOfDaysNextMonth = 7 - firstWeekDayOfNextMonth!
         
        let s1 = currentDays.count
         guard let s2 = numberOfDaysNextMonth else {
             return
         }
-        guard let s3 = weekdaysOfLastMonth else {
-            return
-        }
-        sumDays = s1 + s2 + s3
+//        guard let s3 = weekdaysOfLastMonth else {
+//            return
+//        }
+        sumDays = s1 + s2 + firstWeekDay!
     }
     
     func setupView() {
@@ -175,7 +188,7 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SNMichealCalendar_colCellID, for: indexPath) as! SNMichealCalendarCell
         
-        guard let fd = firstWeekDay else {
+        guard var fd = firstWeekDay else {
             cell.empty()
             return cell
         }
@@ -187,7 +200,7 @@ extension SNMichealCalendarView : UICollectionViewDataSource {
         }
         
         
-        
+        fd -= 1
 //        if indexPath.row < fd {} else
             if indexPath.row >= fd && indexPath.row < fd+currentDays.count {
             let d = currentDays[indexPath.row-fd]

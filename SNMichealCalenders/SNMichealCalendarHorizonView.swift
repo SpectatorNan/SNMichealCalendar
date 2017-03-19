@@ -39,6 +39,8 @@ class SNMichealCalendarHorizonView: UIScrollView {
     var showYear: Int?
     var showMonth: Int?
     
+    var heightLayout: Constraint?
+    
     var months = [[Date]]()
     var currentIndex = 0
     var pageNum = 0
@@ -55,10 +57,11 @@ extension SNMichealCalendarHorizonView {
     
     
     func loadPreView() {
-        self.contentOffset.x = contentX - width
+        contentOffset.x = contentX - width
         pageNum -= 1
         completePreAndArchiveData()
         updatePreAction()
+        updateHeight()
     }
     
     func loadNextView() {
@@ -66,6 +69,28 @@ extension SNMichealCalendarHorizonView {
         pageNum += 1
         completeNextAndArchiveData()
         updateNextAction()
+        updateHeight()
+    }
+    
+    
+    // MARK: - WARIN 自适应高度变化有BUG 原因还未查明
+    func updateHeight() {
+        guard let height = centerView?.viewHeight else {
+            return
+        }
+        viewHeight = height
+//        
+//        heightLayout?.deactivate()
+
+       
+//        snp.makeConstraints { (make) in
+//            heightLayout = make.height.equalTo(height).constraint
+//        }
+        
+//        self.snp.updateConstraints { (make) in
+//            make.height.equalTo(height)
+//            make.right.left.equalToSuperview()
+//        }
     }
     
     /// 此方法必须在生成新数据之后调用
@@ -179,6 +204,10 @@ extension SNMichealCalendarHorizonView {
         let dates2 = until.getDaysOfMonth(year: year, month: mon)
         let dates3 = until.getDaysOfMonth(year: nextyear, month: nextmonth)
         
+        months.insert(dates1, at: 0)
+        months.insert(dates2, at: 1)
+        months.insert(dates3, at: 2)
+        
         let view1 = SNMichealCalendarView(dates: dates1, frame: CGRect.zero)
         addSubview(view1)
         leftView = view1
@@ -197,7 +226,7 @@ extension SNMichealCalendarHorizonView {
         
         self.viewHeight = height
         self.viewWidth = SN_ScreenW
-        self.viewSize = CGSize(width: SN_ScreenW, height: height)
+//        self.viewSize = CGSize(width: SN_ScreenW, height: height)
         
         setupView()
     }
@@ -218,9 +247,9 @@ extension SNMichealCalendarHorizonView {
             return
         }
         
-        guard let size = self.viewSize else {
-            return
-        }
+//        guard let size = self.viewSize else {
+//            return
+//        }
         
         guard let width = self.viewWidth else {
             return
@@ -230,25 +259,16 @@ extension SNMichealCalendarHorizonView {
             return
         }
         
-        lV.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+        
+        lV.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: width, height: lV.viewHeight!))
         
         
-        cV.frame = CGRect(origin: CGPoint(x: width, y: 0), size: size)
+        cV.frame = CGRect(origin: CGPoint(x: width, y: 0), size: CGSize(width: width, height: cV.viewHeight!))
         
         
-        rV.frame = CGRect(origin: CGPoint(x: width*2, y: 0), size: size)
-        
-         let cData = cV.currentDays
-        
-        months.insert(cData, at: 0)
-        
-         let lData = lV.currentDays
-            self.months.insert(lData, at: 0)
-            self.currentIndex = 1
+        rV.frame = CGRect(origin: CGPoint(x: width*2, y: 0), size: CGSize(width: width, height: rV.viewHeight!))
         
         
-         let rData = rV.currentDays
-            self.months.insert(rData, at: 2)
         
         
         
