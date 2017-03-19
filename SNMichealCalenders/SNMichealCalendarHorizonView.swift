@@ -79,7 +79,7 @@ extension SNMichealCalendarHorizonView {
             return
         }
         viewHeight = height
-//        
+//
 //        heightLayout?.deactivate()
 
        
@@ -102,6 +102,7 @@ extension SNMichealCalendarHorizonView {
         rightView = tmpVa
         leftView = tmpVb
         
+        leftView?.dates = months[0]
         leftView?.x = contentX - width
     }
     
@@ -114,7 +115,7 @@ extension SNMichealCalendarHorizonView {
         rightView = tmpVb
         leftView = tmpVa
         
-        
+        rightView?.dates = months[2]
         rightView?.x = contentX + width
     }
     

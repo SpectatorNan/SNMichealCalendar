@@ -62,11 +62,12 @@ class SNMichealCalendar: UIView {
         }
         
         
-        
+        let calendarHeight = CGFloat(6)  * SNMichealCalendar_adjustSizeAPP(54+38.6) + SNMichealCalendar_adjustSizeAPP(40) + SNMichealCalendar_adjustSizeAPP(54)
         calendarHorizonView.snp.makeConstraints { (make) in
         make.top.equalTo(menuView.snp.bottom).offset(SNMichealCalendar_adjustSizeAPP(38.6))
             make.right.left.equalToSuperview()
-           calendarHorizonView.heightLayout = make.height.equalTo(calendarHorizonView.viewHeight!).constraint
+//           calendarHorizonView.heightLayout = make.height.equalTo(calendarHorizonView.viewHeight!).constraint
+            make.height.equalTo(calendarHeight)
         }
         
 //        calendarView.snp.makeConstraints { (make) in

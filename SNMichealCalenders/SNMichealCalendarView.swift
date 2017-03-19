@@ -53,6 +53,7 @@ class SNMichealCalendarView: UIView {
         set {
             self.currentDays = newValue
             getCurrentMonth()
+            updateDate()
         }
     }
     
@@ -142,6 +143,11 @@ class SNMichealCalendarView: UIView {
 //            return
 //        }
         sumDays = s1 + s2 + firstWeekDay!
+    }
+    
+    func updateDate() {
+        
+        collectionView.reloadData()
     }
     
     func setupView() {
